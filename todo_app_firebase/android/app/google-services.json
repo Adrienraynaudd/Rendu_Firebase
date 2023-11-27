@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "97169397136",
+    "project_id": "ynot-ea26e",
+    "storage_bucket": "ynot-ea26e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97169397136:android:fbb3ac1541adf135e24f15",
+        "android_client_info": {
+          "package_name": "com.example.todo_app_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNLJYGjX0CRTT4FA_TKckLuVAxSPFXoao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97169397136:android:e02abbecfce4f859e24f15",
+        "android_client_info": {
+          "package_name": "com.example.ynot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNLJYGjX0CRTT4FA_TKckLuVAxSPFXoao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
