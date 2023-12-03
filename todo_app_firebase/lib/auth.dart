@@ -1,7 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart'; // Import the FirebaseAuth library
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
+  const AuthPage({Key? key}) : super(key: key);
+
   @override
   _AuthPageState createState() => _AuthPageState();
 }
@@ -9,7 +11,7 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  String? _errorMessage; // New variable to store the error message
+  String? _errorMessage;
 
   void _register() async {
     try {
@@ -18,16 +20,11 @@ class _AuthPageState extends State<AuthPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      // User registered successfully
-
-      // You can navigate to another page or perform any action after successful registration.
-      // For example:
       Navigator.pushReplacementNamed(context, '/');
     } on FirebaseAuthException catch (e) {
-      // Handle errors
       print('Error during registration: ${e.message}');
       setState(() {
-        _errorMessage = e.message; // Update the error message
+        _errorMessage = e.message;
       });
     }
   }
@@ -36,33 +33,60 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration'),
+        title: const Text('Registration'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              keyboardType: TextInputType.emailAddress,
+            Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 14.0, horizontal: 16.0),
+                ),
+                keyboardType: TextInputType.emailAddress,
+              ),
             ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
+            Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 14.0, horizontal: 16.0),
+                ),
+                obscureText: true,
+              ),
             ),
-            SizedBox(height: 16.0),
+            Container(
+              width: double.infinity,
+              height: 1,
+              color: Colors.grey[300],
+              margin: const EdgeInsets.symmetric(vertical: 16.0),
+            ),
             ElevatedButton(
               onPressed: _register,
-              child: Text('Register'),
+              child: const Text('Register', style: TextStyle(fontSize: 16.0)),
             ),
-            if (_errorMessage != null) // Display the error message if it exists
-              Text(
-                _errorMessage!,
-                style: TextStyle(color: Colors.red),
+            if (_errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  _errorMessage!,
+                  style: const TextStyle(color: Colors.red),
+                ),
               ),
           ],
         ),

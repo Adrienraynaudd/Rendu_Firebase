@@ -12,6 +12,7 @@ class NoteTile extends StatelessWidget {
   final VoidCallback onEdit;
 
   const NoteTile({
+    super.key,
     required this.title,
     required this.content,
     required this.imageUrl,
@@ -36,7 +37,7 @@ class NoteTile extends StatelessWidget {
             onChanged: onChanged,
           ),
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: onEdit,
           ),
         ],
@@ -57,32 +58,33 @@ class AddNoteDialog extends StatefulWidget {
 class __AddNoteDialogState extends State<AddNoteDialog> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
+  var uploadTask;
   String? _addNoteError;
   PlatformFile? selectedFile;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Add a new note'),
+      title: const Text('Add a new note'),
       content: Column(
         children: [
           TextField(
             controller: _titleController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Title',
               hintText: 'Enter the title of the note',
             ),
           ),
           TextField(
             controller: _contentController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Content',
               hintText: 'Enter the content of the note',
             ),
           ),
           ElevatedButton(
             onPressed: selectFile,
-            child: Text('Select Image'),
+            child: const Text('Select Image'),
           ),
           if (selectedFile != null)
             Expanded(
@@ -96,8 +98,9 @@ class __AddNoteDialogState extends State<AddNoteDialog> {
           if (_addNoteError != null)
             Text(
               _addNoteError!,
-              style: TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             ),
+          buildProgress(),
         ],
       ),
       actions: [
@@ -105,7 +108,7 @@ class __AddNoteDialogState extends State<AddNoteDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () async {
@@ -124,12 +127,17 @@ class __AddNoteDialogState extends State<AddNoteDialog> {
               // Upload the file to Firebase Storage
               final path = 'notes/${selectedFile!.name}';
               final ref = FirebaseStorage.instance.ref().child(path);
-              final uploadTask = ref.putData(selectedFile!.bytes!);
+              setState(() {
+                uploadTask = ref.putData(selectedFile!.bytes!);
+              });
 
               // Wait for the upload to complete
               await uploadTask.whenComplete(() async {
                 // Get the download URL of the uploaded file
                 final imageUrl = await ref.getDownloadURL();
+                setState(() {
+                  uploadTask = null;
+                });
 
                 // Call the onAddNote function provided by the parent
                 final user = FirebaseAuth.instance.currentUser;
@@ -152,7 +160,7 @@ class __AddNoteDialogState extends State<AddNoteDialog> {
               });
             }
           },
-          child: Text('Add'),
+          child: const Text('Add'),
         ),
       ],
     );
@@ -165,4 +173,33 @@ class __AddNoteDialogState extends State<AddNoteDialog> {
       selectedFile = result.files.first;
     });
   }
+
+  Widget buildProgress() => StreamBuilder<TaskSnapshot>(
+      stream: uploadTask?.snapshotEvents,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final data = snapshot.data!;
+          double progress = data.bytesTransferred / data.totalBytes;
+          return SizedBox(
+            height: 50,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                LinearProgressIndicator(
+                  value: progress,
+                  backgroundColor: Colors.green,
+                ),
+                Center(
+                  child: Text(
+                    '${(progress * 100).roundToDouble()}%',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      });
 }

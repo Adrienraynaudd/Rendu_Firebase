@@ -116,14 +116,39 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Show a message if the user is not logged in
-            if (FirebaseAuth.instance.currentUser == null)
-              Text(
-                'Log in to access notes',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+            // Show a welcome message and user details if logged in
+            if (FirebaseAuth.instance.currentUser != null)
+              Column(
+                children: [
+                  CircleAvatar(
+                    // You can display user's profile picture here
+                    radius: 40,
+                    backgroundColor: Colors.grey[300],
+                    // Placeholder or user's profile picture
+                    child: Icon(Icons.person, size: 60, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Welcome ${FirebaseAuth.instance.currentUser!.displayName ?? ''}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Email: ${FirebaseAuth.instance.currentUser!.email ?? ''}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  if (FirebaseAuth.instance.currentUser == null)
+                    Text(
+                      'Log in to access notes',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                ],
               ),
           ],
         ),

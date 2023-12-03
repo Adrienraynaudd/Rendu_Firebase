@@ -36,19 +36,19 @@ class __EditNoteDialogState extends State<EditNoteDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Edit Note'),
+      title: const Text('Edit Note'),
       content: Column(
         children: [
           TextField(
             controller: _titleController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Title',
               hintText: 'Enter the title of the note',
             ),
           ),
           TextField(
             controller: _contentController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Content',
               hintText: 'Enter the content of the note',
             ),
@@ -56,7 +56,7 @@ class __EditNoteDialogState extends State<EditNoteDialog> {
           TextField(
             // Add this section
             controller: _imageUrlController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Image URL',
               hintText: 'Enter the URL of the image',
             ),
@@ -64,7 +64,7 @@ class __EditNoteDialogState extends State<EditNoteDialog> {
           if (_editNoteError != null)
             Text(
               _editNoteError!,
-              style: TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             ),
         ],
       ),
@@ -73,7 +73,7 @@ class __EditNoteDialogState extends State<EditNoteDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () async {
@@ -105,7 +105,7 @@ class __EditNoteDialogState extends State<EditNoteDialog> {
               }
             }
           },
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );

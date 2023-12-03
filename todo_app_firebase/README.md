@@ -34,7 +34,8 @@ My App works with the Flutter language. It's composed with several scripts linke
 To install :
 
 > git clone https://github.com/Adrienraynaudd/Ynotes
-
+- install flutter
+- configure your firebase database
 - Get Dependencies: flutter pub get
 - Run the App: flutter run
 
