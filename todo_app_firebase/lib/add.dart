@@ -119,31 +119,48 @@ class __AddNoteDialogState extends State<AddNoteDialog> {
               setState(() {
                 _addNoteError = 'Title cannot be empty';
               });
-            } else if (selectedFile == null) {
-              setState(() {
-                _addNoteError = 'Please select an image';
-              });
             } else {
               // Upload the file to Firebase Storage
-              final path = 'notes/${selectedFile!.name}';
-              final ref = FirebaseStorage.instance.ref().child(path);
-              setState(() {
-                uploadTask = ref.putData(selectedFile!.bytes!);
-              });
-
-              // Wait for the upload to complete
-              await uploadTask.whenComplete(() async {
-                // Get the download URL of the uploaded file
-                final imageUrl = await ref.getDownloadURL();
+              if (selectedFile != null) {
+                final path = 'notes/${selectedFile!.name}';
+                final ref = FirebaseStorage.instance.ref().child(path);
                 setState(() {
-                  uploadTask = null;
+                  uploadTask = ref.putData(selectedFile!.bytes!);
                 });
 
-                // Call the onAddNote function provided by the parent
+                // Wait for the upload to complete
+                await uploadTask.whenComplete(() async {
+                  // Get the download URL of the uploaded file
+                  final imageUrl = await ref.getDownloadURL();
+                  setState(() {
+                    uploadTask = null;
+                  });
+
+                  // Call the onAddNote function provided by the parent
+                  final user = FirebaseAuth.instance.currentUser;
+                  final userEmail = user?.email;
+                  final error = await widget.onAddNote(
+                      title, content, selectedFile, userEmail);
+
+                  if (error != null) {
+                    // If there is an error, display it
+                    setState(() {
+                      _addNoteError = error;
+                    });
+                  } else {
+                    // If there is no error, reset the error and close the dialog
+                    setState(() {
+                      _addNoteError = null;
+                    });
+                    Navigator.of(context).pop();
+                  }
+                });
+              } else {
+                // If no image is selected, call onAddNote without image-related logic
                 final user = FirebaseAuth.instance.currentUser;
                 final userEmail = user?.email;
-                final error = await widget.onAddNote(
-                    title, content, selectedFile, userEmail);
+                final error =
+                    await widget.onAddNote(title, content, null, userEmail);
 
                 if (error != null) {
                   // If there is an error, display it
@@ -157,7 +174,7 @@ class __AddNoteDialogState extends State<AddNoteDialog> {
                   });
                   Navigator.of(context).pop();
                 }
-              });
+              }
             }
           },
           child: const Text('Add'),
