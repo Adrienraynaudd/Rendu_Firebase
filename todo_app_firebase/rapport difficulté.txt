@@ -26,10 +26,3 @@ Dans le cas de l'interface utilisateur, j'ai utilisé le package file_picker pou
 
 Conclusion
 Malgré ces défis, le projet a abouti à une application fonctionnelle qui offre aux utilisateurs une expérience de prise de notes agréable et interactive, y compris la gestion réussie des images. Cela souligne l'importance d'une planification minutieuse et de l'adoption de bonnes pratiques lors de l'intégration de fonctionnalités complexes telles que la gestion d'images avec Firebase Storage. Ce projet a renforcé mes compétences en matière de développement Flutter et d'intégration avec des services cloud tels que Firebase.
-
-
-
-
-
-Message ChatGPT…
-

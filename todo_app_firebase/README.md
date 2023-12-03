@@ -34,21 +34,22 @@ My App works with the Flutter language. It's composed with several scripts linke
 To install :
 
 > git clone https://github.com/Adrienraynaudd/Ynotes
-- install flutter
-- configure your firebase database
+- install flutter (https://docs.flutter.dev/get-started/install)
+- configure your firebase database (https://firebase.google.com/docs/database/flutter/start)
 - Get Dependencies: flutter pub get
 - Run the App: flutter run
+- Choose your device
 
 ***
 
 ## **Usage**
 Here's how to use the  Flutter App:
 
-Connection: cliqque on button connection and enter your email and password or create a new account
+Connection: Click on button Connections :mens: and enter your email and password or Click on button Register :arrow_right_hook: and create a new account
 
 go to note page: click on the button note "+"
 
-Add notes: Click the "+" button at the  bottom create a new note with image or note. Enter the note name and press "Add."
+Add notes: Click the "+" button at the  bottom create a new note with image. Enter the note name and press "Add."
 
 Note Completion: To mark a note as completed, tap the checkbox next to the note's name.
 
