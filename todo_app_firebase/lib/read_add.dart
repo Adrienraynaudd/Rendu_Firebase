@@ -17,8 +17,6 @@ class _FirestorePageState extends State<FirestorePage> {
   final storage = FirebaseStorage.instance;
   final CollectionReference notes =
       FirebaseFirestore.instance.collection('notes');
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _contentController = TextEditingController();
 
   // A map to store the selected state of each note
   Map<String, bool> selectedNotes = {};
@@ -86,8 +84,8 @@ class _FirestorePageState extends State<FirestorePage> {
                     });
                   },
                   onEdit: () {
-                    _showEditNoteDialog(
-                        document.id, data['title'], data['content']);
+                    _showEditNoteDialog(document.id, data['title'],
+                        data['content'], data['imageUrl']);
                   },
                 );
               },
@@ -174,14 +172,15 @@ class _FirestorePageState extends State<FirestorePage> {
     );
   }
 
-  void _showEditNoteDialog(
-      String documentId, String currentTitle, String currentContent) {
+  void _showEditNoteDialog(String documentId, String currentTitle,
+      String currentContent, String? currentImageUrl) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return EditNoteDialog(
           initialTitle: currentTitle,
           initialContent: currentContent,
+          initialImageUrl: currentImageUrl,
           onEditNote:
               (String newTitle, String newContent, String? newImageUrl) async {
             try {

@@ -29,8 +29,8 @@ class __EditNoteDialogState extends State<EditNoteDialog> {
     super.initState();
     _titleController = TextEditingController(text: widget.initialTitle);
     _contentController = TextEditingController(text: widget.initialContent);
-    _imageUrlController = TextEditingController(
-        text: widget.initialImageUrl ?? ''); // Add this line
+    _imageUrlController =
+        TextEditingController(text: widget.initialImageUrl); // Add this line
   }
 
   @override

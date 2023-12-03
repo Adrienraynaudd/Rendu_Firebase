@@ -140,15 +140,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     'Email: ${FirebaseAuth.instance.currentUser!.email ?? ''}',
                     style: TextStyle(fontSize: 16),
                   ),
-                  if (FirebaseAuth.instance.currentUser == null)
-                    Text(
-                      'Log in to access notes',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                 ],
+              ),
+            if (FirebaseAuth.instance.currentUser == null)
+              Text(
+                'Log in to access notes',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
           ],
         ),
